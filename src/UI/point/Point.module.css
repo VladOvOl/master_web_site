@@ -1,0 +1,16 @@
+.containerPoint{
+    background-color: blue;
+    width: 100%;
+    height: fit-content;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 10px;
+    background-color: #CCCCCC;
+}
+
+.btn{
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}

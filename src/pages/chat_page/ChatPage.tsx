@@ -1,0 +1,32 @@
+import { useEffect, useState } from "react";
+import type { IPoint } from "../../feature/map/MapFeature";
+import styles from "./ChatPage.module.css";
+import { getAllAidPoints } from "../../service/map.service";
+import Point from "../../UI/point/Point";
+
+function ChatPage() {
+    const [aidPoints, setAidPoints] = useState<IPoint[]>([]);
+
+    useEffect(() => {
+        getAidPoints();
+    }, []);
+
+    const getAidPoints = async () => {
+        const response = await getAllAidPoints();
+        setAidPoints(response.data);
+        console.log(response.data);
+    };
+
+    return (
+        <div className={styles.container}>
+            <p className={styles.title}>Chat Page</p>
+            <div className={styles.containerList}>
+                {aidPoints.map((point) => (
+                    <Point point = {point}/>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default ChatPage;

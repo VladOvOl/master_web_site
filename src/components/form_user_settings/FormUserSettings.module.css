@@ -1,0 +1,42 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container_form_input{
+    width: fit-content;
+    height:fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_password{
+    display: flex;
+    gap: 10px;
+}
+
+.container_input{
+    height: 100%;
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.input{
+    width: 300px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.img{
+    position: absolute;
+    left: 270px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.btn{
+    height: 100%;
+}

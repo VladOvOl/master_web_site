@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.active{
+    opacity: 40%;
+}
+
+.container_children_item{
+    display: block;
+}
+
+.children{
+    width: 50%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

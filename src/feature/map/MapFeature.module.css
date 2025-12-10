@@ -1,0 +1,17 @@
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 10px;
+}
+
+.container_slice{
+    width: 70%;
+    height: 100%;
+}
+
+.container_outlet{
+    width: 30%;
+    height: 100%;
+
+}
