@@ -148,7 +148,6 @@ const FormCreatePoint = ({
                     <label className={styles.label} htmlFor="location_type">
                         Location Type
                     </label>
-
                     <select
                         className={styles.input}
                         id="type"
@@ -160,7 +159,9 @@ const FormCreatePoint = ({
                         }
                         value={createPointForm.locationTypeId}
                     >
+                        <option value={0}>Select Location </option>
                         {typeLocations.map((obj) => (
+                            
                             <option value={obj.id}>{obj.name}</option>
                         ))}
                     </select>

@@ -3,18 +3,35 @@ import type { IPoint } from "../../feature/map/MapFeature";
 import styles from "./ChatPage.module.css";
 import { getAllAidPoints } from "../../service/map.service";
 import Point from "../../UI/point/Point";
+import type { INewPoint } from "../../components/map/Map";
 
 function ChatPage() {
     const [aidPoints, setAidPoints] = useState<IPoint[]>([]);
+     const [coordinate, setCoordinate] = useState<INewPoint| null>(null);
 
     useEffect(() => {
-        getAidPoints();
+        if(coordinate){
+            getAidPoints();
+        }
+        
+    }, [coordinate]);
+
+    /** Получение текущего местоположения пользователя */
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setCoordinate({latitude: position.coords.latitude,longitude:position.coords.longitude});
+                console.log(position.coords)
+            },
+            (error) => {
+                console.log("Ошибка получения геолокации:", error);
+            }
+        );
     }, []);
 
     const getAidPoints = async () => {
-        const response = await getAllAidPoints();
+        const response = await getAllAidPoints(coordinate?.latitude,coordinate?.longitude);
         setAidPoints(response.data);
-        console.log(response.data);
     };
 
     return (
