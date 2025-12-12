@@ -9,3 +9,46 @@
     box-sizing: border-box;
     gap: 10px;
 }
+
+.title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.address, .description {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.services {
+    margin-bottom: 20px;
+}
+
+.services ul {
+    list-style: inside disc;
+}
+
+.photos {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.photo {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}

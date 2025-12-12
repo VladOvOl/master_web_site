@@ -8,8 +8,8 @@ import type { IPoint } from "./MapFeature";
 
 const DetailPointFeature = () => {
     const { pointId } = useParams();
+    const [point, setPoint] = useState<IPoint | null>(null);
     const [photos, setPhotos] = useState<string[]>([]);
-    const [point, setPoint] = useState<IPoint>();
 
     useEffect(() => {
         getPointInfo();
@@ -28,41 +28,59 @@ const DetailPointFeature = () => {
         }
     };
 
-    const loadPhotos = async (photoIds: string[]) => {
+    const loadPhotos = async (photoIds: number[]) => {
         try {
             const loadedPhotos = await Promise.all(
                 photoIds.map(async (id) => {
                     const response = await getPhotoById(id);
-
                     const base64 = btoa(
                         new Uint8Array(response.data).reduce(
                             (data, byte) => data + String.fromCharCode(byte),
                             ""
                         )
                     );
-
                     return `data:image/png;base64,${base64}`;
                 })
             );
-
             setPhotos(loadedPhotos);
         } catch (error) {
             console.log(error);
         }
     };
 
+    if (!point) return <p>Завантаження...</p>;
+
     return (
         <div className={styles.container}>
-            <p>Point № {pointId}</p>
-            <p>{point?.name}</p>
-            <p>{point?.description}</p>
+            <h1 className={styles.title}>{point.name}</h1>
+            <p className={styles.address}><strong>Адреса:</strong> {point.address}</p>
+            <p className={styles.description}>{point.description}</p>
 
-            <p>
-                {point?.location.latitude} : {point?.location.longitude}
-            </p>
+            <div className={styles.info}>
+                <div>
+                    <h3>Тип точки</h3>
+                    <p><strong>{point.locationType.name}</strong></p>
+                    <p>{point.locationType.description}</p>
+                </div>
+                <div>
+                    <h3>Координати</h3>
+                    <p>Широта: {point.location.latitude}</p>
+                    <p>Довгота: {point.location.longitude}</p>
+                </div>
+            </div>
 
-            <p>{point?.locationType.name}</p>
-            <p>{point?.locationType.description}</p>
+            {point.services && point.services.length > 0 && (
+                <div className={styles.services}>
+                    <h3>Послуги</h3>
+                    <ul>
+                        {point.services.map(service => (
+                            <li key={service.id}>
+                                <strong>{service.name}:</strong> {service.description}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             {photos.length > 0 && (
                 <div className={styles.photos}>
@@ -70,9 +88,8 @@ const DetailPointFeature = () => {
                         <img
                             key={index}
                             src={url}
-                            width={"100%"}
-                            height={200}
-                            alt={`point photo ${index}`}
+                            alt={`Фото точки ${index + 1}`}
+                            className={styles.photo}
                         />
                     ))}
                 </div>
