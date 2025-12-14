@@ -11,7 +11,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import type { IPoint } from "../../feature/map/MapFeature";
+import type { IPoint } from "../../../src/feature/map/MapFeature";
 import { Link } from "react-router";
 
 export type INewPoint = {
@@ -108,6 +108,10 @@ const MapWithMarkersAndRoute = ({
                 showAlternatives: false,
                 draggableWaypoints: false,
                 addWaypoints: false,
+                router: L.Routing.osrmv1({
+                serviceUrl: "https://router.project-osrm.org/route/v1",
+                profile: "driving", // <--- меняем на пешеходный маршрут
+            }),
             }).addTo(map);
 
             map.flyTo(L.latLng(routePoint.latitude, routePoint.longitude), 14);
@@ -136,7 +140,7 @@ const MapWithMarkersAndRoute = ({
                     />
                     <MapClickHandler />
                     <Marker position={userLocation}>
-                        <Popup>Вы здесь</Popup>
+                        <Popup>You are here</Popup>
                     </Marker>
                     {aidPoints.map((p) => (
                         <Marker
@@ -161,7 +165,7 @@ const MapWithMarkersAndRoute = ({
                             <Popup>
                                 <>
                                     {p.name}
-                                    <Link to={`/map/${p.id}`}>Перейти</Link>
+                                    <Link to={`/map/${p.id}`}>Go to</Link>
                                 </>
                             </Popup>
                         </Marker>
@@ -174,7 +178,7 @@ const MapWithMarkersAndRoute = ({
                     {routePoint && <Routing />}
                 </MapContainer>
             ) : (
-                <div>Загрузка карты...</div>
+                <div>Downloading Map...</div>
             )}
         </div>
     );

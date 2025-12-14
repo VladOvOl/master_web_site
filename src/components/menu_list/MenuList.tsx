@@ -21,10 +21,15 @@ const MenuItems: IItem[] = [
                 image: "map-pinned",
                 link: "/map/createPoint",
             },
+            {
+                title: "Filters",
+                image: "sliders-horizontal",
+                link: "/map/settingsMap",
+            },
         ],
     },
     {
-        title: "Chat",
+        title: "Points List",
         image: "message-circle-off",
         link: "/chat",
     },

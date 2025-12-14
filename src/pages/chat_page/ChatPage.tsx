@@ -38,9 +38,9 @@ function ChatPage() {
         <div className={styles.container}>
             <p className={styles.title}>Chat Page</p>
             <div className={styles.containerList}>
-                {aidPoints.map((point) => (
-                    <Point point = {point}/>
-                ))}
+                
+                    {aidPoints && <Point items = {aidPoints}/>}
+                
             </div>
         </div>
     );

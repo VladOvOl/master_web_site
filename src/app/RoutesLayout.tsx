@@ -1,21 +1,24 @@
 import { Navigate, Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
-import MapPage from "../pages/map_page/MapPage";
 import RouteGuard from "./middleware/PrivateGuard";
 import PublicGuard from "./middleware/PublickGuard";
 import { useAuth } from "../providers/auth/AuthProvider";
-import SettingsPage from "../pages/SettingsPage";
-import AuthPage from "../pages/auth_page/AuthPage";
-import ChatPage from "../pages/chat_page/ChatPage";
-import CreatePointFeature from "../feature/map/CreatePointFeature";
-import SettingsMapFeature from "../feature/map/SettingsMapFeature";
-import DetailPointFeature from "../feature/map/DetailsPointFeature";
+import { lazy, Suspense } from "react";
+
+const SettingsPage = lazy(() => import("../pages/SettingsPage"));
+const SettingsMapFeature = lazy(() => import("../feature/map/SettingsMapFeature"));
+const CreatePointFeature = lazy(() => import("../feature/map/CreatePointFeature"));
+const DetailPointFeature = lazy(() => import("../feature/map/DetailsPointFeature"));
+const ChatPage = lazy(() => import("../pages/chat_page/ChatPage"));
+const AuthPage = lazy(() => import("../pages/auth_page/AuthPage"));
+const MapPage = lazy(() => import("../pages/map_page/MapPage"));
 
 function RoutesLayout() {
 
     const {isAuth} = useAuth()
 
     return (
+        <Suspense fallback={null}>
         <Routes>
             <Route element={<PublicGuard isAuth={isAuth} />}>
                 <Route path="/auth" element={<AuthPage/>}/>
@@ -34,6 +37,7 @@ function RoutesLayout() {
                 </Route>
             </Route>
         </Routes>
+        </Suspense>
     );
 }
 
