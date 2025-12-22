@@ -5,6 +5,7 @@
     box-sizing: border-box;
     border-radius: 10px;
     background-color: white;
+    overflow:  hidden;
 }
 
 .containerList{
@@ -12,7 +13,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;  
+    gap: 10px;
 }
 
 .title{

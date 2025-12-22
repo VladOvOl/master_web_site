@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { IPoint } from "../../feature/map/MapFeature";
 import styles from "./ChatPage.module.css";
-import { getAllAidPoints } from "../../service/map.service";
+import {getAllAidPoints, getAllAidPointsForChats} from "../../service/map.service";
 import Point from "../../UI/point/Point";
 import type { INewPoint } from "../../components/map/Map";
 
@@ -30,7 +30,7 @@ function ChatPage() {
     }, []);
 
     const getAidPoints = async () => {
-        const response = await getAllAidPoints(coordinate?.latitude,coordinate?.longitude);
+        const response = await getAllAidPointsForChats(coordinate?.latitude,coordinate?.longitude);
         setAidPoints(response.data);
     };
 

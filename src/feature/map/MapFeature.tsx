@@ -20,7 +20,8 @@ export type IPoint = {
 export type IQuery = {
     name: string;
     locationTypeId: number;
-    range: number
+    range: number;
+    search: boolean;
 };
 
 const MapFeature = () => {
@@ -30,24 +31,34 @@ const MapFeature = () => {
         longitude: 0,
     });
     const [aidPoints, setAidPoints] = useState<IPoint[]>([]);
-    const [coordinate, setCoordinate] = useState<INewPoint| null>(null);
-    const [queryParam, setQueryParam] = useState<IQuery>({name: '',locationTypeId: 0,range:10000,})
+    const [coordinate, setCoordinate] = useState<INewPoint | null>(null);
+    const [queryParam, setQueryParam] = useState<IQuery>({
+        name: "",
+        locationTypeId: 0,
+        range: 10000,
+        search: true,
+    });
 
     const outlet = useOutlet();
 
     useEffect(() => {
-        if(coordinate){
+    }, [queryParam]);
+     /** Get points */
+    useEffect(() => {
+        if (coordinate) {
             getAidPoints();
         }
-        
-    }, [coordinate]);
+    }, [coordinate, queryParam.search]);
 
-    /** Получение текущего местоположения пользователя */
+    /** Get current location */
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                setCoordinate({latitude: position.coords.latitude,longitude:position.coords.longitude});
-                console.log(position.coords)
+                setCoordinate({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                });
+                console.log(position.coords);
             },
             (error) => {
                 console.log("Ошибка получения геолокации:", error);
@@ -56,9 +67,27 @@ const MapFeature = () => {
     }, []);
 
     const getAidPoints = async () => {
-        const response = await getAllAidPoints(coordinate?.latitude,coordinate?.longitude);
-        setAidPoints(response.data);
-    };
+        try {
+            const params: any = {
+                latitude: coordinate?.latitude,
+                longitude: coordinate?.longitude,
+                range: queryParam.range,
+            };
+
+            if (queryParam.locationTypeId !== 0) {
+                params["location-type-id"] = queryParam.locationTypeId;
+            }
+
+            if (queryParam.name) {
+                params["search-query"] = queryParam.name;
+            }
+
+            const response = await getAllAidPoints(params);
+            setAidPoints(response.data);
+        }catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -81,7 +110,7 @@ const MapFeature = () => {
                             newPoint,
                             getAidPoints,
                             queryParam,
-                            setQueryParam
+                            setQueryParam,
                         }}
                     />
                 </div>

@@ -1,4 +1,6 @@
 .list {
+  overflow-y: scroll;
+  margin-bottom: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 16px;

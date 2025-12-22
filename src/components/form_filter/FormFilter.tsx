@@ -94,7 +94,14 @@ const FormFilter = ({
                 </div>
 
                 <div className={styles.container_form_login}>
-                    <Button onClick={() => console.log('ddfd') }>Search</Button>
+                    <Button onClick={() =>
+                        setQueryParam((prev) => ({
+                            ...prev,
+                            search: !prev.search,
+                        }))
+                    }>
+                        Search
+                    </Button>
                 </div>
             </div>
         </div>
